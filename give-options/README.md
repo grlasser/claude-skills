@@ -19,7 +19,7 @@ With the skill installed, use natural language in any Claude Code session:
 > what are my options for implementing real-time event correlation?
 > propose approaches for replacing our current caching layer
 > how should I tackle the SR Linux telemetry pipeline redesign?
-> compare alternatives for the GSM state persistence layer
+> compare alternatives for the graph state persistence layer
 > trade-off analysis: gRPC vs REST vs GraphQL for the agent API
 ```
 
