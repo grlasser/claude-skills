@@ -21,6 +21,42 @@ Not every decision deserves the same analytical weight. Before starting, assess 
 
 State the calibration level at the start so the user knows what depth to expect.
 
+## Parallel Agent Mode (Claude Code Only)
+
+When running in Claude Code with bash tool access, heavyweight analyses benefit from parallel subagent orchestration. This is optional and activates when the user requests it (e.g., "spawn agents to give me options") or when the decision is heavyweight and involves multiple distinct technologies that need independent research.
+
+### How It Works
+
+After Phase 1 (Problem Frame) and initial option sketching, spawn parallel `claude -p` subagents via bash for the research-intensive work:
+
+```bash
+# Research agent per option (run in parallel with &)
+claude -p "Research [Option 1 technology/approach]: documentation, known limitations, community post-mortems, benchmarks, recent changes. Return structured findings as JSON with keys: strengths, weaknesses, gotchas, evidence_links." --allowedTools "WebSearch" > /tmp/give-options/research-option1.json &
+
+claude -p "Research [Option 2 technology/approach]: documentation, known limitations, community post-mortems, benchmarks, recent changes. Return structured findings as JSON with keys: strengths, weaknesses, gotchas, evidence_links." --allowedTools "WebSearch" > /tmp/give-options/research-option2.json &
+
+# ... one per option
+
+wait  # Wait for all agents to complete
+```
+
+### Orchestration Steps
+
+1. **Frame the problem** (Phase 1) in the main session
+2. **Sketch candidate options** (Phase 3 lightweight pass) to know what to research
+3. **Spawn research agents** (one per option, parallel), each searching for real-world evidence on its assigned approach
+4. **Collect results** and read all output files back into the main session
+5. **Continue in the main session** with Phases 3-6, now enriched with parallel research findings. The main session handles all stress-testing, synthesis, and recommendation with the full picture.
+
+### Guidelines
+
+- Create `/tmp/give-options/` before spawning agents: `mkdir -p /tmp/give-options`
+- Keep each agent's prompt focused on ONE option's research. Do not ask a single agent to research everything.
+- Set `--allowedTools "WebSearch"` so agents can search for current information.
+- If an agent fails or times out, note the gap and proceed. Do not block the entire analysis on one agent.
+- The main session is the synthesizer. Subagents gather evidence; the main session reasons about it.
+- For midweight decisions, parallel agents are usually overkill. Use sequential web search from the main session instead.
+
 ## Process
 
 ### Phase 1: Problem Frame

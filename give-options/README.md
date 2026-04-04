@@ -15,19 +15,29 @@ When facing a decision with multiple valid paths (migration strategies, architec
 With the skill installed, use natural language in any Claude Code session:
 
 ```
-> give me 5 options for migrating to FalkorDB, with adversarial analysis
+> give me 5 options for migrating to a graph database, with adversarial analysis
 > what are my options for implementing real-time event correlation?
 > propose approaches for replacing our current caching layer
-> how should I tackle the SR Linux telemetry pipeline redesign?
-> compare alternatives for the graph state persistence layer
-> trade-off analysis: gRPC vs REST vs GraphQL for the agent API
+> how should I tackle the telemetry pipeline redesign?
+> compare alternatives for the state persistence layer
+> trade-off analysis: gRPC vs REST vs GraphQL for the API
 ```
+
+### Parallel Agent Mode
+
+For heavyweight decisions, you can spawn parallel research agents directly from your session:
+
+```
+> spawn agents to give me 5 options for migrating to a graph database
+```
+
+This launches parallel `claude -p` subagents that research each option independently via web search, then synthesizes everything back in your main session. All output stays in front of you.
 
 ## The 6-Phase Process
 
 1. **Problem Frame** establishes constraints, current state, and success criteria before generating anything. Extracts context from your message first, only asks clarifying questions when critical information is genuinely missing.
 
-2. **Research** (mandatory for significant decisions) searches for documentation, known limitations, community post-mortems, and benchmark data. Objectivity grounded in evidence, not just reasoning from training data.
+2. **Research** (mandatory for significant decisions) searches for documentation, known limitations, community post-mortems, and benchmark data. In parallel agent mode, each option gets its own dedicated research agent running simultaneously.
 
 3. **Option Generation** produces genuinely distinct approaches (not variations on a theme), each with concrete detail, effort estimates, and key dependencies. If fewer distinct options exist than requested, says so rather than padding.
 
@@ -41,7 +51,7 @@ With the skill installed, use natural language in any Claude Code session:
 
 The skill automatically scales its depth to match the decision's weight:
 
-**Heavyweight** (architecture migrations, platform choices): Full process with active research and thorough stress testing.
+**Heavyweight** (architecture migrations, platform choices): Full process with active research (parallel agents when requested) and thorough stress testing.
 
 **Midweight** (library selection, feature approach): Full process, focused stress tests on the 2-3 most relevant lenses per option.
 

@@ -10,7 +10,7 @@ Skills are markdown instruction sets that Claude Code loads automatically based 
 
 | Skill | Description | Triggers |
 |-------|-------------|----------|
-| [give-options](./give-options/) | Adversarial options analysis — generates candidate solutions, stress-tests each one, and delivers a clear recommendation | "give me options," "what are my options," "propose approaches," "how should I tackle," "trade-off analysis" |
+| [give-options](./give-options/) | Adversarial options analysis — generates candidate solutions, stress-tests each one, and delivers a clear recommendation. Supports parallel agent mode. | "give me options," "what are my options," "propose approaches," "how should I tackle," "trade-off analysis" |
 | [plan-review](./plan-review/) | Adversarial audit and stress-testing of plans, strategies, and proposals | "review this plan," "stress-test this," "what could go wrong," "red team this" |
 | [pre-mortem](./pre-mortem/) | Narrative failure analysis — imagines the project already failed and works backward through the causal chain | "pre-mortem this," "imagine this fails," "what kills this project," "war-game this" |
 | [decision-logger](./decision-logger/) | Captures key decisions with alternatives, rationale, risks, and revisit triggers into a persistent log | "log this decision," "capture that choice," "show me decisions," "why did we choose X" |
