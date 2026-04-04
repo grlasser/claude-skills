@@ -50,7 +50,7 @@ Also triggers automatically when you share a substantial codebase and ask for a 
 
 ```
 RESEARCH UPGRADE REPORT
-Codebase: ReasonGrid agent harness
+Codebase: OneAI agent harness
 Language: Python 3.11
 Findings: 5 upgrade opportunities across 3 categories
 
