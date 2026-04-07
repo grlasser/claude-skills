@@ -104,4 +104,4 @@ These skills are designed to work alongside the [Superpowers plugin](https://git
 
 ## Author
 
-Greg Lasserre — Director of Product Management AI & Research, Nokia IP Networks
+Greg Lasserre —
