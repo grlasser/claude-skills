@@ -4,7 +4,7 @@ Custom skills for [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-co
 
 ## What Are Skills?
 
-Skills are markdown instruction sets that Claude Code loads automatically based on trigger phrases. When you say something like "red team this plan," Claude finds the matching skill and follows its framework instead of improvising — giving you consistent, high-quality output every time.
+Skills are markdown instruction sets that Claude Code loads automatically based on trigger phrases. When you say something like "red team this plan," Claude finds the matching skill and follows its framework instead of improvising, giving you consistent, high-quality output every time.
 
 ## Available Skills
 
