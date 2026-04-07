@@ -104,4 +104,4 @@ These skills are designed to work alongside the [Superpowers plugin](https://git
 
 ## Author
 
-Greg Lasserre —
+Greg Lasserre
