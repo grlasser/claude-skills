@@ -1,6 +1,6 @@
 # Claude Skills
 
-Custom skills for [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) — reusable prompt frameworks that extend Claude's capabilities with structured, domain-specific workflows.
+Custom skills for [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code): reusable prompt frameworks that extend Claude's capabilities with structured, domain-specific workflows.
 
 ## What Are Skills?
 
