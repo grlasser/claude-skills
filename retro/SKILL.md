@@ -14,7 +14,7 @@ If the outcome was a success: help the user understand why, so they can repeat i
 If the outcome was mixed: distinguish what drove each part.
 
 **Calibrate depth to scope:**
-- **Short cycle (sprint, experiment, single decision):** Focus on Phases 2 and 5. Keep the output under one page. Phase 3 optional if decisions were few.
+- **Short cycle (sprint, experiment, single decision):** Focus on Phases 2, 4, and 5. Keep the output under one page. Skip or compress Phase 3 (decision quality audit requires sufficient decision count to be useful — sparse for a 2-week sprint). Phase 4 (signal vs. noise) is worth running even briefly — identifying what you missed watching is lightweight and immediately useful for the next cycle.
 - **Medium project (weeks to a few months):** Run all 5 phases at moderate depth.
 - **Major program (multi-month, multi-team):** Full depth on all phases. The causal chain and decision audit earn the most attention.
 
@@ -34,6 +34,8 @@ Ask or infer:
 
 If the user hasn't provided this context, proceed with what's available, flag explicitly what's unknown, and note where missing information limits confidence in the analysis. Don't block — a partial retro is more useful than no retro.
 
+**When accounts conflict:** Retros frequently surface disagreement about what actually happened. If different participants describe the same event differently, do not adjudicate — surface the conflict explicitly. Conflicting accounts are themselves a finding: they usually reveal unclear ownership, misaligned mental models, or information asymmetry that existed during execution. Name the conflict, note what would be needed to resolve it, and proceed with the analysis noting where conclusions depend on which account is accurate.
+
 ---
 
 ## Phase 2: Causal Chain Analysis
@@ -47,6 +49,8 @@ Resist the temptation to stop at the first explanation. Use "why" recursively:
 > "The launch was delayed" → Why? → "The integration was buggy" → Why? → "We didn't test the edge case" → Why? → "We assumed the API contract was stable" → Why? → "No one owned API contract verification"
 
 Surface the **structural or systemic cause**, not just the triggering event.
+
+**When no clear causal chain emerges:** If the data isn't available, the outcome is genuinely overdetermined, or the team has insufficient access to what actually happened — say so explicitly. Document what's unknown and what monitoring, data collection, or observability would have been needed to support a better analysis. The absence of a traceable chain is itself a finding about the team's ability to learn from this type of event.
 
 ### Causal Categories to Examine
 
@@ -85,6 +89,8 @@ What early signals were available that would have predicted the outcome?
 - What warnings were raised and overridden?
 - What metrics or behaviors were present early that predicted what happened later?
 - What should we have been monitoring that we weren't?
+
+Any signal identified here that wasn't being watched is a direct input to `signal-tracker` for the next project. Don't just note the gap — name the specific signal, what threshold would have triggered a response, and what the response should have been. This is the retro's most direct contribution to future execution quality.
 
 ---
 
@@ -139,9 +145,23 @@ Verdict options: **Good process / good outcome**, **Good process / bad outcome (
 
 **Forward-learning:** Carry forward / stop / watch-for — specific and actionable.
 
-**One-sentence verdict:** The thing this retro would most want the team to remember in 6 months.
+**Revisit conditions:** When would it be worth revisiting these conclusions? Name the specific conditions — a similar project starting, a key assumption being proven right or wrong, a significant context change — not just "in 6 months." This is a `decision-logger` candidate: log the revisit trigger so it doesn't rely on someone remembering to look back.
+
+**One-sentence verdict:** The thing this retro would most want the team to remember in 6 months. This sentence is a `decision-logger` candidate — capture it with a revisit trigger so it survives beyond the retro document.
 
 ---
+
+## Integration
+
+**This skill feeds into:**
+- `decision-logger` — the one-sentence verdict and revisit conditions are strong capture candidates; log them with a named revisit trigger
+- `signal-tracker` — Phase 4 gaps (signals that were absent) become the input failure modes for the next project's watchlist
+- `assumption-mapper` — if the retro reveals that a key assumption was wrong from the start, flag it for the next project's assumption map
+- `evergreen-extractor` — forward-learning items (behaviors to keep, stop, watch-for) are strong vault atoms; competitive intelligence surfaced in retros has a 90-day expiry
+
+**This skill receives input from:**
+- Any concluded project, sprint, experiment, launch, or significant decision
+- `pre-mortem` — if a pre-mortem was run before execution, compare its failure predictions against what actually happened; this is one of the most valuable retro inputs available
 
 ## Tone Calibration
 

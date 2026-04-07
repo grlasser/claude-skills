@@ -18,7 +18,7 @@ Before excavating, calibrate depth to the size of the input:
 - **Medium plan or architecture (1–10 pages):** Surface 10–15 total assumptions.
 - **Complex program or large system design (10+ pages):** Surface up to 20. Never exceed 20 — over-excavation dilutes the signal as badly as under-excavation.
 
-Apply this ceiling consistently: if you've surfaced the limit, stop and rank what you have rather than adding marginal items.
+This ceiling applies to the **ranked output**, not to the excavation pass. Excavate broadly across all six categories — you cannot know which assumptions matter most until you've found them. After excavation, rank everything and surface only the highest-priority items within the scope limit. Never truncate the excavation early.
 
 ---
 
@@ -82,10 +82,23 @@ After excavation, rank the assumptions using this grid:
 | | Low Confidence | Medium Confidence | High Confidence |
 |---|---|---|---|
 | **Critical impact** | 🔴 **Immediate risk** | 🔴 **Immediate risk** | 🟡 **Monitor** |
-| **Major impact** | 🟠 **Validate soon** | 🟠 **Validate soon** | ⚪ Low priority |
+| **Major impact** | 🟠 **Validate soon** | 🟠 **Validate soon** | 🟡 **Monitor** |
 | **Minor impact** | ⚪ Background noise | ⚪ Ignore | ⚪ Ignore |
 
 Focus your output on 🔴 and 🟠 tier assumptions. Don't pad the list with ⚪ items.
+
+---
+
+## Re-Run Triggers
+
+Assumption confidence is not static. A 🟡 assumption can become 🔴 mid-execution when new information arrives. Re-run assumption-mapper — or at minimum re-examine the 🟡 Monitor tier — when any of the following occur:
+
+- A key external condition changes (market shift, regulatory update, vendor failure)
+- A significant scope or timeline change is proposed
+- A 🟡 assumption shows early signs of weakening (a stakeholder becomes unresponsive, a dependency slips, a technical test fails)
+- The project passes a major milestone and context has materially changed
+
+Do not treat the initial assumption map as a permanent artifact. It reflects the world at the time it was produced.
 
 ---
 
@@ -98,6 +111,7 @@ For each 🔴 and 🟠 assumption, specify the fastest path to validation using 
 - **Desk research** — Public information (market data, competitor filings, specs) could resolve this within hours.
 - **Experiment / spike** — A small-scale test or prototype would validate feasibility. Describe the minimum version.
 - **Decision forcing** — This isn't actually uncertain; it's undecided. Name who needs to decide and by when.
+- **Customer / market research** — The assumption is about customer behavior, demand, or willingness to pay. Validate through direct evidence: user interviews, a beta or pilot, a survey, or a pre-sale. Desk research can inform but rarely validates behavioral assumptions — you need contact with actual users or buyers.
 
 Don't just say "validate this" — name the type and the minimum viable validation action.
 
@@ -124,9 +138,21 @@ For each: name the assumption → note that if conditions change, re-examine
 
 ---
 
+## Integration
+
+**This skill feeds into:**
+- `plan-review` — 🔴 assumptions are the failure modes plan-review should stress-test; pass the assumption map as context
+- `pre-mortem` — each 🔴 assumption is a candidate failure scenario; "what if this assumption is wrong?" is exactly what pre-mortem narrates
+- `signal-tracker` — 🔴 and 🟠 assumptions that can't be immediately validated become signals to monitor during execution; pass them as input failure modes
+- `decision-logger` — consciously accepted assumptions (those the team decides to proceed with despite low confidence) should be logged with rationale and revisit triggers
+
+**This skill receives input from:**
+- Any plan, architecture doc, proposal, strategy document, or decision brief
+- `give-options` output — before committing to a recommended option, map its assumptions
+
 ## What NOT To Do
 
 - Do not summarize the plan. The user knows what it is.
 - Do not list every single assumption — surface the ones that matter.
 - Do not conflate assumptions with risks. A risk is "the vendor might fail." An assumption is "we believe the vendor is reliable." Surface the underlying belief, not just the downstream event.
-- Do not suggest fixes. This pass is about making assumptions visible so the user can decide which ones to validate, re-examine, or consciously accept.
+- Do not suggest fixes to the plan itself — rewriting scope, changing approach, or redesigning the architecture is not this skill's job. Specifying a validation action for each 🔴 and 🟠 assumption is not a fix; it is resolving the uncertainty that makes the assumption risky. That distinction matters: validation actions belong here, plan changes do not.

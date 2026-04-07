@@ -17,7 +17,25 @@ Before writing, confirm:
 3. **What format is needed?** (email, memo, deck narrative, talking points, Slack message, press release, etc.)
 4. **What action or response does the user want from the audience?** (approve, understand, act, not interfere, fund, trust, comply, etc.)
 
+**Before reframing, check the source content:** If the content includes information that may not be appropriate for this audience — confidential financial projections, internal competitive assessments, personnel matters, unreleased product details — flag it before writing. Ask the user: "This content includes [X] — should that appear in the version for [audience], or should I work around it?" Do not silently omit sensitive material; make the omission explicit so the user can decide.
+
 If the audience is clear and the content is provided, infer the desired outcome from context, state your inference explicitly, and proceed — don't ask when you can reason. If the audience itself is missing or genuinely ambiguous, ask before proceeding. A comms reframe without knowing the target is just a paraphrase.
+
+**Format length reference:**
+
+| Format | Typical length |
+|---|---|
+| Slack message | 3–5 sentences |
+| Email (internal, peer) | 100–200 words |
+| Email (external, formal) | 150–300 words |
+| Talking points | 5–8 bullets, 1–2 sentences each |
+| One-pager / memo | 400–600 words |
+| Executive summary | 150–250 words |
+| Board memo | 400–800 words, no more |
+| Press release | 400–600 words |
+| Blog post | 600–1200 words |
+
+If the user specifies a length, respect it. If not, default to the shorter end — shorter is almost always more effective for senior audiences.
 
 ---
 
@@ -65,6 +83,13 @@ If the audience is clear and the content is provided, infer the desired outcome 
 **Framing approach:** Segment what's relevant to them specifically. Explain implications, not mechanisms. Make asks concrete and scoped.
 **Pitfalls:** Expecting them to translate relevance themselves, providing too much context about the technical side.
 
+### Board / Investors
+**What they care about:** Governance, fiduciary risk, strategic direction, material decisions requiring approval, financial performance, and whether management has the situation under control.
+**What they don't care about:** Operational detail, implementation mechanics, team-level decisions that don't require board action.
+**Framing approach:** Explicitly mark what requires a decision vs. what is informational. Lead with the bottom line — financial implication, strategic risk, or opportunity — before any context. Keep it short: board materials are read by people with limited time and high responsibility. If action is required, make the ask in the first paragraph.
+**Pitfalls:** Burying the decision point, providing operational detail that raises governance concerns without providing resolution, using internal language or acronyms, presenting uncertainty as confidence.
+**Distinct from exec communications:** Board materials carry fiduciary weight. Overclaiming, underreporting risk, or omitting material information in board communications has legal implications that internal exec communications do not. When in doubt, err toward more disclosure, not less.
+
 ### Multilingual / non-English stakeholders
 **What they care about:** Same as whichever functional profile applies (exec, customer, regulator, etc.) — but language and register carry extra weight because mistranslation of tone or formality creates trust problems that content alone can't fix.
 **Framing approach:** Write in the audience's primary language. Match the formality register of that language's professional context — French business communications tend toward formal; German tends toward precise and hierarchical; Japanese requires explicit deference markers. Avoid anglicisms unless they're standard in that domain. When in doubt, err toward more formal.
@@ -85,6 +110,7 @@ Within any audience profile, the appropriate register varies by context. Use thi
 | Customer-facing (new prospect) | Credible, low-pressure, proof-point-forward |
 | Regulator / compliance | Formal, structured, evidence-first — no informality |
 | Crisis / bad news communication | Calm, factual, ownership-forward — no spin |
+| Partner / channel communication | Collegial and direct — they know the product space; treat them as informed peers who also need commercial alignment and shared positioning clarity |
 
 Apply the appropriate register *within* the audience profile. A message to an exec you've worked with for years reads differently than a message to an exec you've never met — even though both are "executive."
 
@@ -93,6 +119,8 @@ Apply the appropriate register *within* the audience profile. A message to an ex
 ## Step 2: Reframe
 
 Once you have content + audience + format + desired outcome, produce the communication.
+
+**While reframing, track in real time:** Every time you soften a claim, omit a detail, or recontextualize something, make a note. These tracked items become the divergence risk flag in the output. If you wait until after writing to look for divergences, you will miss the ones made instinctively. Tracking during writing is more accurate than retrospective review.
 
 ### Core reframing moves:
 
@@ -127,9 +155,23 @@ The framing notes are for the user's eyes — they're the reasoning behind the r
 
 ---
 
+## Mixed-Audience Communications
+
+When the audience is not homogeneous — an all-hands presentation, a cross-functional briefing, a customer QBR with multiple buyer types in the room — single-profile framing will misfire for part of the audience.
+
+**Approach for mixed audiences:**
+1. Identify the **primary decision-maker** in the room and optimize the main communication for their profile
+2. Identify the **secondary audience** and note where the same content will land very differently for them
+3. Flag specific passages that need additional framing for the secondary audience — a sentence that satisfies an exec may confuse an engineer; a technical detail that anchors an engineer may alarm a procurement buyer
+4. When the gap is large, suggest **layering**: lead with exec-appropriate framing, then provide a clearly marked technical section that the engineers can engage with while the execs follow at a high level
+
+Do not try to write one version that simultaneously satisfies all audience profiles — that produces a communication that's mediocre for everyone. Optimize for the primary; protect the secondary.
+
 ## Multi-Audience Mode
 
 If the user needs to communicate the same content to multiple audiences (e.g., exec briefing + engineering update + customer summary), produce each version separately with a brief note on what changed between them and why. This is especially useful for product launches, architectural decisions, and policy changes.
+
+**Scope limit:** Produce up to 3–4 audience versions per session. If more are needed, ask the user to prioritize — which audiences are highest-stakes for this particular communication? Produce those first and offer to continue in a follow-up.
 
 ---
 
