@@ -6,94 +6,38 @@ Custom skills for [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-co
 
 Skills are markdown instruction sets that Claude Code loads automatically based on trigger phrases. When you say something like "red team this plan," Claude finds the matching skill and follows its framework instead of improvising — giving you consistent, high-quality output every time.
 
----
+## Available Skills
 
-## Skill Suites
+| Skill | Description | Triggers |
+| --- | --- | --- |
+| [give-options](give-options) | Adversarial options analysis — generates candidate solutions, stress-tests each one, and delivers a clear recommendation. Supports parallel agent mode. | "give me options," "what are my options," "propose approaches," "how should I tackle," "trade-off analysis" |
+| [plan-review](plan-review) | Adversarial audit and stress-testing of plans, strategies, and proposals | "review this plan," "stress-test this," "what could go wrong," "red team this" |
+| [pre-mortem](pre-mortem) | Narrative failure analysis — imagines the project already failed and works backward through the causal chain | "pre-mortem this," "imagine this fails," "what kills this project," "war-game this" |
+| [decision-logger](decision-logger) | Captures key decisions with alternatives, rationale, risks, and revisit triggers into a persistent log | "log this decision," "capture that choice," "show me decisions," "why did we choose X" |
+| [context-check](context-check) | Saves session state to CLAUDE.md and git before context compaction or session transitions | "context check," "save state," "checkpoint," "wrap up" |
+| [research-scout](research-scout) | Analyzes code to surface cutting-edge research papers and engineering techniques that could improve or optimize the implementation | "research-scout this," "find new techniques for this," "what does recent research say about this code" |
+| [research-lineage](research-lineage) | Analyzes code to identify which published research papers and techniques are already implemented, mapping code locations to canonical papers | "research-lineage this," "what research is this code based on," "map this code to papers," "what techniques does this implement" |
 
-Skills are organized into two suites plus supporting utilities. They share a canonical audience taxonomy and a common evidence tier system, and are designed to be chained — output from one feeds directly into the next.
+### How They Work Together
 
-### Suite 1 — Decision Intelligence
-
-For planning, execution, and retrospection. Use these when building, designing, or deciding.
-
-| Skill | What it does | Key triggers |
-|---|---|---|
-| [give-options](./give-options) | Generates candidate solutions, stress-tests each adversarially, delivers the strongest recommendation | "give me options," "what are my options," "trade-off analysis" |
-| [assumption-mapper](./assumption-mapper) | Excavates unstated assumptions; ranks by confidence × consequence-if-wrong; specifies validation actions | "what are we assuming," "map the assumptions," "what has to be true" |
-| [plan-review](./plan-review) | Adversarial structural audit of any plan, strategy, or architecture | "review this plan," "stress-test this," "red team this" |
-| [pre-mortem](./pre-mortem) | Imagines the project already failed and works backward through the causal chain | "pre-mortem this," "imagine this fails," "what kills this project" |
-| [signal-tracker](./signal-tracker) | Derives a structured early-warning watchlist — leading indicators, cadence, and pre-committed response protocols | "what should I be monitoring," "leading indicators for this," "signal-track this" |
-| [retro](./retro) | Post-execution retrospective: causal chains, decision quality audit, luck vs. skill accounting | "retro this," "what did we learn," "why did this go wrong" |
-| [decision-logger](./decision-logger) | Captures key decisions with alternatives, rationale, risks, and revisit triggers | "log this decision," "capture that choice," "why did we choose X" |
-| [context-check](./context-check) | Saves session state to CLAUDE.md and git before context compaction | "context check," "save state," "checkpoint" |
-
-**How they chain:**
 ```
-give-options → assumption-mapper → plan-review → pre-mortem
-                                                      |
-                                               [execution]
-                                                      |
-                                            signal-tracker (monitors)
-                                                      |
-                                                   retro
-                                      (decision-logger throughout)
-                                      (context-check each session)
+Explore Options → Plan → Audit → Execute → Review → Improve
+       │                   │                    │         │
+  give-options     ┌───────┼───────┐    research-lineage  │
+  (generates and   │       │       │    (maps code to     │
+   stress-tests   plan-review │  pre-mortem  published   research-scout
+   candidates)   (structural) │  (narrative)  papers)   (surfaces new
+                              │                          research to
+                       decision-logger                   improve code)
+                      (captures choices
+                       made at any phase)
+                              │
+                       context-check
+                      (preserves state
+                       across sessions)
 ```
 
----
-
-### Suite 2 — Technical Product Marketing
-
-For TPM engineers, technical writers, and anyone with code and docs access who needs positioning, competitive intelligence, or release collateral.
-
-| Skill | What it does | Key triggers |
-|---|---|---|
-| [proof-point-miner](./proof-point-miner) | Mines code and docs for defensible claims; rates by credibility tier; detects positioning gaps | "find proof points," "what can we back up," "mine this for marketing material" |
-| [positioning-stress-test](./positioning-stress-test) | Adversarially challenges positioning through three buyer personas; generates falsification scenarios | "stress-test this positioning," "is this defensible," "red team this messaging" |
-| [competitive-diff](./competitive-diff) | Architectural-level competitive analysis with asymmetric win/loss/draw map and field-ready battle card | "how do we compare to X," "competitive brief," "battle card for X" |
-| [technical-narrative](./technical-narrative) | Constructs a technical story from design decisions — three depths simultaneously | "write the technical story," "build the architecture narrative," "explain our design philosophy" |
-| [comms-frame](./comms-frame) | Translates any content for a specific audience; includes framing notes and divergence risk flags | "frame this for execs," "translate this for the customer," "make this land with [stakeholder]" |
-| [release-brief](./release-brief) | Produces a full 6-format release asset pack calibrated per audience, with proof point delta | "brief this release," "generate release assets," "prepare the launch kit" |
-| [evergreen-extractor](./evergreen-extractor) | Extracts durable atomic notes formatted for Obsidian with wikilinks, routing, and expiry flags | "extract notes from this," "make this Obsidian-ready," "atomic notes" |
-
-**How they chain:**
-```
-proof-point-miner ──────────────────────────────────┐
-      |                                              |
-positioning-stress-test → technical-narrative → comms-frame
-      |                          |
-competitive-diff         release-brief ──→ proof-point-miner (delta loop)
-                                |
-                        evergreen-extractor ← all skills feed this
-                               |
-                         Obsidian vault
-```
-
-**Shared standards across Suite 2:**
-
-*Credibility tier system (your product claims):*
-
-| Tier | Type | Use |
-|---|---|---|
-| **1** | Measured/Benchmarked | Lead with. Fully defensible. |
-| **2** | Architectural Decision | Strong. Implies expertise. |
-| **3** | Design Intent | Usable with care. |
-| **4** | Assertion | Flag for elevation or retirement. |
-
-*Competitor evidence system:* **V** Verified · **S** Stated · **I** Inferred (hedge) · **A** Assumed (internal only)
-
-*Canonical audience taxonomy:* Technical evaluator · Architect/technical lead · DevOps/SRE/ops · Compliance/security/risk · Procurement/vendor risk · Executive/budget owner · Technical buyer (customer) · Business buyer (customer)
-
----
-
-### Supporting Skills
-
-| Skill | What it does | Key triggers |
-|---|---|---|
-| [research-scout](./research-scout) | Analyzes code to surface cutting-edge research papers and engineering techniques | "research-scout this," "find new techniques for this" |
-| [code-prep](./code-prep) | Prepares Python codebases for Claude Code — generates CONTEXT.md with architecture map and call graph | "prep this code," "map this codebase," "generate a context file" |
-
----
+**give-options** generates multiple candidate solutions, stress-tests each adversarially, and recommends the strongest survivor. **plan-review** dissects the plan analytically — assumptions, failure modes, gaps, contradictions. **pre-mortem** generates realistic failure stories that surface timing, political, and compounding risks that structured analysis misses. **decision-logger** captures the choices you make at any point so rationale survives beyond the session. **context-check** preserves the full session state to CLAUDE.md and git before context compaction wipes the slate. **research-scout** analyzes code patterns and searches arXiv, Papers With Code, and engineering blogs to find recent techniques — then maps each finding to a specific code location and proposes a concrete redesign. **research-lineage** does the reverse: it identifies which established research papers, algorithms, and techniques your code already implements, producing a structured lineage report with canonical citations, match types, and a chronological technique timeline.
 
 ## Installation
 
@@ -102,33 +46,13 @@ competitive-diff         release-brief ──→ proof-point-miner (delta loop)
 ```bash
 git clone https://github.com/grlasser/claude-skills.git ~/Projects/claude-skills
 
-# Suite 1 — Decision Intelligence
 ln -s ~/Projects/claude-skills/give-options ~/.claude/skills/give-options
-ln -s ~/Projects/claude-skills/assumption-mapper ~/.claude/skills/assumption-mapper
 ln -s ~/Projects/claude-skills/plan-review ~/.claude/skills/plan-review
 ln -s ~/Projects/claude-skills/pre-mortem ~/.claude/skills/pre-mortem
-ln -s ~/Projects/claude-skills/signal-tracker ~/.claude/skills/signal-tracker
-ln -s ~/Projects/claude-skills/retro ~/.claude/skills/retro
 ln -s ~/Projects/claude-skills/decision-logger ~/.claude/skills/decision-logger
 ln -s ~/Projects/claude-skills/context-check ~/.claude/skills/context-check
-
-# Suite 2 — Technical Product Marketing
-ln -s ~/Projects/claude-skills/proof-point-miner ~/.claude/skills/proof-point-miner
-ln -s ~/Projects/claude-skills/positioning-stress-test ~/.claude/skills/positioning-stress-test
-ln -s ~/Projects/claude-skills/competitive-diff ~/.claude/skills/competitive-diff
-ln -s ~/Projects/claude-skills/technical-narrative ~/.claude/skills/technical-narrative
-ln -s ~/Projects/claude-skills/comms-frame ~/.claude/skills/comms-frame
-ln -s ~/Projects/claude-skills/release-brief ~/.claude/skills/release-brief
-ln -s ~/Projects/claude-skills/evergreen-extractor ~/.claude/skills/evergreen-extractor
-
-# Supporting
 ln -s ~/Projects/claude-skills/research-scout ~/.claude/skills/research-scout
-ln -s ~/Projects/claude-skills/code-prep ~/.claude/skills/code-prep
-```
-
-`code-prep` requires two Python packages on first use:
-```bash
-pip install tree-sitter tree-sitter-python --break-system-packages
+ln -s ~/Projects/claude-skills/research-lineage ~/.claude/skills/research-lineage
 ```
 
 ### How It Works
@@ -137,48 +61,40 @@ Claude Code looks for skills in `~/.claude/skills/` (global) and `.claude/skills
 
 ```
 ~/.claude/skills/
-├── give-options            -> ~/Projects/claude-skills/give-options
-├── assumption-mapper       -> ~/Projects/claude-skills/assumption-mapper
-├── plan-review             -> ~/Projects/claude-skills/plan-review
-├── pre-mortem              -> ~/Projects/claude-skills/pre-mortem
-├── signal-tracker          -> ~/Projects/claude-skills/signal-tracker
-├── retro                   -> ~/Projects/claude-skills/retro
-├── decision-logger         -> ~/Projects/claude-skills/decision-logger
-├── context-check           -> ~/Projects/claude-skills/context-check
-├── proof-point-miner       -> ~/Projects/claude-skills/proof-point-miner
-├── positioning-stress-test -> ~/Projects/claude-skills/positioning-stress-test
-├── competitive-diff        -> ~/Projects/claude-skills/competitive-diff
-├── technical-narrative     -> ~/Projects/claude-skills/technical-narrative
-├── comms-frame             -> ~/Projects/claude-skills/comms-frame
-├── release-brief           -> ~/Projects/claude-skills/release-brief
-├── evergreen-extractor     -> ~/Projects/claude-skills/evergreen-extractor
-├── research-scout          -> ~/Projects/claude-skills/research-scout
-└── code-prep               -> ~/Projects/claude-skills/code-prep
+├── give-options      -> ~/Projects/claude-skills/give-options
+├── plan-review       -> ~/Projects/claude-skills/plan-review
+├── pre-mortem        -> ~/Projects/claude-skills/pre-mortem
+├── decision-logger   -> ~/Projects/claude-skills/decision-logger
+├── context-check     -> ~/Projects/claude-skills/context-check
+├── research-scout    -> ~/Projects/claude-skills/research-scout
+├── research-lineage  -> ~/Projects/claude-skills/research-lineage
+├── docx              -> ...  (built-in)
+├── pdf               -> ...  (built-in)
+└── ...
 ```
 
 ### Adding a New Skill
 
-1. Create a folder with a `SKILL.md` file (and optionally a `README.md`)
-2. Symlink it: `ln -s ~/Projects/claude-skills/<name> ~/.claude/skills/<name>`
+1. Create a folder in this repo with a `SKILL.md` file
+2. Symlink it: `ln -s ~/Projects/claude-skills/<skill-name> ~/.claude/skills/<skill-name>`
 3. Start a new Claude session — the skill is live
 
 ### Syncing Across Machines
 
 ```bash
-# Push
 cd ~/Projects/claude-skills
 git add . && git commit -m "description" && git push
 
-# Pull (on other machine — symlinks pick up changes immediately)
+# On other machine:
 cd ~/Projects/claude-skills && git pull
 ```
 
----
+Symlinks pick up changes immediately — no reinstall needed.
 
 ## Complementary Tools
 
-These skills are designed to work alongside the [Superpowers plugin](https://github.com/obra/superpowers) for Claude Code, which covers Brainstorm → Plan → Execute → Debug. The skills in this repo fill the gaps Superpowers doesn't cover: adversarial option analysis, assumption excavation, plan review, narrative failure analysis, mid-execution monitoring, post-execution retrospectives, decision capture, session continuity, technical product marketing intelligence, audience-calibrated communications, and knowledge graph integration.
+These skills are designed to work alongside the [Superpowers plugin](https://github.com/obra/superpowers) for Claude Code, which covers Brainstorm → Plan → Execute → Debug. The skills in this repo fill the gaps Superpowers doesn't cover: adversarial option analysis, plan review, narrative failure analysis, decision capture, session continuity, and research-backed code analysis.
 
-## Contributing
+## Author
 
-Skills are markdown files — no build step, no dependencies beyond the optional Python packages for `code-prep`. To contribute, open a PR with a new folder containing `SKILL.md` and `README.md`.
+Greg Lasserre — Director of Product Management AI & Research, Nokia IP Networks
