@@ -154,4 +154,4 @@ These skills are designed to work alongside the [Superpowers plugin](https://git
 
 ## Author
 
-Gregory (Greg) Lasserre
+Gregory (Greg) Lasserre — gregory.lasserre@gmail.com
